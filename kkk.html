@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>For mi Aela 💖</title>
+
+<style>
+body{
+  margin:0;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+  background:radial-gradient(circle at top,#ff9a9e,#fad0c4,#fbc2eb);
+  font-family:'Comic Sans MS','Brush Script MT',cursive;
+  color:white;
+  text-align:center;
+  overflow:hidden;
+}
+
+.card{
+  background:rgba(255,255,255,0.2);
+  padding:40px;
+  border-radius:20px;
+  z-index:2;
+}
+
+button{
+  padding:12px 25px;
+  border:none;
+  border-radius:20px;
+  font-size:18px;
+  cursor:pointer;
+  margin:10px;
+  transition: all 0.2s ease;
+}
+
+#yes{background:#4caf50;color:#fff;}
+#no{background:#f44336;color:#fff;position:absolute;}
+
+.hidden{display:none;}
+
+.gallery img{
+  width:150px;
+  height:150px;
+  border-radius:15px;
+  margin:8px;
+  transition:transform 0.3s ease, box-shadow 0.3s ease;
+  cursor:pointer;
+}
+
+.gallery img:hover{
+  transform:scale(1.2);
+  box-shadow:0 0 15px rgba(255,255,255,0.8);
+}
+
+.heart{
+  position:fixed;
+  bottom:-20px;
+  z-index:9999;
+  font-size:24px;
+  color:#ff1e56;
+  text-shadow: 0 0 10px #ff5fa2;
+  animation:float 5s linear forwards;
+  pointer-events:none;
+}
+
+@keyframes float{
+  0% {transform: translateY(0) scale(1); opacity:1;}
+  100% {transform: translateY(-110vh) scale(1.5); opacity:0;}
+}
+
+.letter{
+  margin-top:20px;
+  font-size:18px;
+  max-width:500px;
+  margin-left:auto;
+  margin-right:auto;
+  text-align:left;
+  white-space: pre-wrap;
+}
+</style>
+</head>
+
+<body>
+
+<audio id="bgm" loop>
+  <source src="kalapastangan.mp3" type="audio/mpeg">
+</audio>
+
+<div class="card" id="main">
+  <h1>Happy Heart's Day, my bb 💖</h1>
+  <p>Will you be my Valentine?</p>
+  <button id="yes">Yes</button>
+  <button id="no">No</button>
+</div>
+
+<div class="card hidden" id="yesScreen">
+  <h1>yay, u make me happy !! 💕</h1>
+  <p>I knew u would say yes : 3</p>
+
+  <div class="letter">
+    <p id="typeText"></p>
+  </div>
+
+  <div class="gallery">
+    <img src="photo1.jpg">
+    <img src="photo2.jpg">
+    <img src="photo3.jpg">
+    <img src="photo4.jpg">
+    <img src="photo5.jpg">
+  </div>
+</div>
+
+<script>
+const noBtn = document.getElementById("no");
+const yesBtn = document.getElementById("yes");
+const main = document.getElementById("main");
+const yesScreen = document.getElementById("yesScreen");
+const bgm = document.getElementById("bgm");
+
+let noSize = 18;
+
+// No button moves and grows
+noBtn.addEventListener("mouseover", ()=>{
+  const x = Math.random()*(window.innerWidth-100);
+  const y = Math.random()*(window.innerHeight-50);
+  noBtn.style.left = x+"px";
+  noBtn.style.top = y+"px";
+  noSize += 5;
+  noBtn.style.fontSize = noSize+"px";
+});
+
+noBtn.onclick = ()=>{
+  alert("Come on Aela 😘 say yes please 💕");
+  noSize += 10;
+  noBtn.style.fontSize = noSize+"px";
+};
+
+// Typewriter letter function
+const letterText = `Dear Aela,
+
+From the first day I met you, my world became brighter and happier. Everything feels lighter and more meaningful because of you.
+
+I’m so grateful that I met you. Thank you for always understanding me and staying by my side. You mean so much to me. I can’t wait to see you, bb. I miss you so much.
+
+Will you be my Valentine? 💗
+
+Love always,
+Keysi`;
+
+function typeWriter(){
+  let i = 0;
+  const elem = document.getElementById("typeText");
+  elem.innerHTML = "";
+  function typing(){
+    if(i < letterText.length){
+      elem.innerHTML += letterText.charAt(i);
+      i++;
+      setTimeout(typing, 50);
+    }
+  }
+  typing();
+}
+
+// Yes button click
+yesBtn.onclick = ()=>{
+  main.classList.add("hidden");
+  yesScreen.classList.remove("hidden");
+
+  yesScreen.style.transform = "scale(0)";
+  setTimeout(()=>{
+    yesScreen.style.transition="transform 0.5s";
+    yesScreen.style.transform="scale(1)";
+  },10);
+
+  bgm.play();
+  typeWriter();
+
+  // Floating hearts
+  for(let i=0;i<50;i++){
+    setTimeout(()=>{
+      const heart=document.createElement('div');
+      heart.className='heart';
+      heart.innerHTML='❤';
+      heart.style.left = Math.random()*100+'vw';
+      heart.style.fontSize = (16+Math.random()*30)+'px';
+      document.body.appendChild(heart);
+      setTimeout(()=>heart.remove(),5000);
+    }, i*120);
+  }
+};
+</script>
+
+</body>
+</html>
